@@ -51,9 +51,9 @@ public class Targeting extends Subsystem
     private final double ERROR_INTEGRAL_DEFAULT = 0.0;
     private final double LAST_ERROR_DEFAULT = 0.0;
     
-    private final double VP = 0.5;
-    private final double VI = 0.0;
-    private final double VD = 4.0;
+    private double vP = 0.5;
+    private double vI = 0.0;
+    private double vD = 4.0;
 
     private NetworkTable limeData;          //Data from limelight
     private NetworkTableEntry tAcquired;    // t stands for target
@@ -80,9 +80,9 @@ public class Targeting extends Subsystem
         
         // Set default values for shuffleboard
         limeData.getEntry("camMode").setNumber(0);
-        SmartDashboard.putNumber("P Gain", VP);
-        SmartDashboard.putNumber("I Gain", VI);
-        SmartDashboard.putNumber("D Gain", VD);
+        SmartDashboard.putNumber("P Gain", vP);
+        SmartDashboard.putNumber("I Gain", vI);
+        SmartDashboard.putNumber("D Gain", vD);
     }
 
     @Override
@@ -104,19 +104,19 @@ public class Targeting extends Subsystem
         double d = SmartDashboard.getNumber("D Gain", 0);
 
         // Set PID if changed through shuffleboard
-        if(p != VP)
+        if(p != vP)
         {
-            VP = p;
+            vP = p;
         }
         
-        if(i != VI)
+        if(i != vI)
         {
-            VI = i;
+            vI = i;
         }
         
-        if(d != VD)
+        if(d != vD)
         {
-            VD = d; 
+            vD = d; 
         }
     }
 
@@ -166,7 +166,7 @@ public class Targeting extends Subsystem
             }
             
             //Calculate percent output to feed to velocity drive
-            double percentOutput = (VP * headingError) + (VI * errorIntegral) + (VD * change);
+            double percentOutput = (vP * headingError) + (vI * errorIntegral) + (vD * change);
             if(percentOutput > PERCENT_OUTPUT_LIMIT) 
             {
                 percentOutput = PERCENT_OUTPUT_LIMIT;
