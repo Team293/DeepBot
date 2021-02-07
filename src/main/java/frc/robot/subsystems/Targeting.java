@@ -51,9 +51,9 @@ public class Targeting extends Subsystem
     private final double ERROR_INTEGRAL_DEFAULT = 0.0;
     private final double LAST_ERROR_DEFAULT = 0.0;
     
-    private double vP = 0.5;
-    private double vI = 0.0;
-    private double vD = 4.0;
+    private final double VP = 0.5;
+    private final double VI = 0.0;
+    private final double VD = 4.0;
 
     private NetworkTable limeData;          //Data from limelight
     private NetworkTableEntry tAcquired;    // t stands for target
@@ -80,9 +80,9 @@ public class Targeting extends Subsystem
         
         // Set default values for shuffleboard
         limeData.getEntry("camMode").setNumber(0);
-        SmartDashboard.putNumber("P Gain", vP);
-        SmartDashboard.putNumber("I Gain", vI);
-        SmartDashboard.putNumber("D Gain", vD);
+        SmartDashboard.putNumber("P Gain", VP);
+        SmartDashboard.putNumber("I Gain", VI);
+        SmartDashboard.putNumber("D Gain", VD);
     }
 
     @Override
@@ -104,16 +104,19 @@ public class Targeting extends Subsystem
         double d = SmartDashboard.getNumber("D Gain", 0);
 
         // Set PID if changed through shuffleboard
-        if(p != vP) {
-            vP = p;
+        if(p != VP)
+        {
+            VP = p;
         }
         
-        if(i != vI) {
-            vI = i;
+        if(i != VI)
+        {
+            VI = i;
         }
         
-        if(d != vD) {
-            vD = d; 
+        if(d != VD)
+        {
+            VD = d; 
         }
     }
 
@@ -131,10 +134,12 @@ public class Targeting extends Subsystem
     // Turns the LED on or off
     public void controlLight(boolean enabled)
     {
-        if(enabled){
+        if(enabled)
+        {
             limeData.getEntry("ledMode").setNumber(LIMELIGHT_LED_ON); 
         }
-        else{
+        else
+        {
             limeData.getEntry("ledMode").setNumber(LIMELIGHT_LED_OFF);
         }
     }
@@ -161,7 +166,7 @@ public class Targeting extends Subsystem
             }
             
             //Calculate percent output to feed to velocity drive
-            double percentOutput = (vP * headingError) + (vI * errorIntegral) + (vD * change);
+            double percentOutput = (VP * headingError) + (VI * errorIntegral) + (VD * change);
             if(percentOutput > PERCENT_OUTPUT_LIMIT) 
             {
                 percentOutput = PERCENT_OUTPUT_LIMIT;
