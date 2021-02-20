@@ -29,5 +29,31 @@ public class Constants {
     *   public static final int kRightMotor2Port = 3; 
     * }
     */ 
+    public static final class DriveConstants
+    {
+        private final int LEFT_LEAD_TALON_CAN_ID = 0;
+        private final int LEFT_FOLLOWER_TALON_CAN_ID = 1;
+        private final int RIGHT_LEAD_TALON_CAN_ID = 2;
+        private final int RIGHT_FOLLOWER_TALON_CAN_ID = 3;
+        private final double KF = 0.04759;
+        private final double KP = 0.01461;
+        private final double KI = 0.0;
+        private final double KD = 0.0;
+        
+        private final int PID_SLOT_ID = 0;
+        private final int PID_CONFIG_TIMEOUT_MS = 10;
+        private final int CONFIG_FEEDBACKSENSOR_TIMEOUT_MS = 4000;
+        
+        private final double CLOSED_LOOP_RAMP = 0.5;
+        private final double MAX_VELOCITY = 21549;
+        private final double VELOCITY_LIMIT_PERCENTAGE = 0.5;
+        private final double VELOCITY_SLOWDOWN_MODIFIER = 0.5;
+    }
+
+    public static final class InputConstants 
+    {
+        public static final double DEFAULT_DEADBAND = 0.15;
+        public static final boolean DEFAULT_FORZA_MODE = false;
+    }
 }
 
