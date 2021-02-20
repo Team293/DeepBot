@@ -20,7 +20,8 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public class Constants {
+public class Constants 
+{
    /**
     * public static final class DriveConstants {
     *   public static final int kLeftMotor1Port = 0;
@@ -29,25 +30,23 @@ public class Constants {
     *   public static final int kRightMotor2Port = 3; 
     * }
     */ 
-    public static final class DriveConstants
+    public static final class DrivetrainConstants
     {
-        private final int LEFT_LEAD_TALON_CAN_ID = 0;
-        private final int LEFT_FOLLOWER_TALON_CAN_ID = 1;
-        private final int RIGHT_LEAD_TALON_CAN_ID = 2;
-        private final int RIGHT_FOLLOWER_TALON_CAN_ID = 3;
-        private final double KF = 0.04759;
-        private final double KP = 0.01461;
-        private final double KI = 0.0;
-        private final double KD = 0.0;
-        
-        private final int PID_SLOT_ID = 0;
-        private final int PID_CONFIG_TIMEOUT_MS = 10;
-        private final int CONFIG_FEEDBACKSENSOR_TIMEOUT_MS = 4000;
-        
-        private final double CLOSED_LOOP_RAMP = 0.5;
-        private final double MAX_VELOCITY = 21549;
-        private final double VELOCITY_LIMIT_PERCENTAGE = 0.5;
-        private final double VELOCITY_SLOWDOWN_MODIFIER = 0.5;
+        public static final int LEFT_LEAD_TALON_CAN_ID = 0;
+        public static final int LEFT_FOLLOWER_TALON_CAN_ID = 1;
+        public static final int RIGHT_LEAD_TALON_CAN_ID = 2;
+        public static final int RIGHT_FOLLOWER_TALON_CAN_ID = 3;
+        public static final double KF = 0.04759;
+        public static final double KP = 0.01461;
+        public static final double KI = 0.0;
+        public static final double KD = 0.0;
+        public static final int PID_SLOT_ID = 0;
+        public static final int PID_CONFIG_TIMEOUT_MS = 10;
+        public static final int CONFIG_FEEDBACKSENSOR_TIMEOUT_MS = 4000;
+        public static final double CLOSED_LOOP_RAMP = 0.5;
+        public static final double MAX_VELOCITY = 21549;
+        public static final double VELOCITY_LIMIT_PERCENTAGE = 0.5;
+        public static final double VELOCITY_SLOWDOWN_MODIFIER = 0.5;
     }
 
     public static final class InputConstants 

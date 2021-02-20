@@ -10,15 +10,13 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.DriveConstants.*;
-import frc.robot.Constants.InputConstants.*;
+import static frc.robot.Constants.DrivetrainConstants.*;
+import static frc.robot.Constants.InputConstants.*;
 
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -82,7 +80,7 @@ public class Drivetrain extends SubsystemBase
         leftTalonFollower.setInverted(InvertType.FollowMaster);
         rightTalonLead.setInverted(false);
         rightTalonFollower.setInverted(InvertType.FollowMaster);
-
+        
         leftTalonLead.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, PID_SLOT_ID, CONFIG_FEEDBACKSENSOR_TIMEOUT_MS);
         rightTalonLead.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, PID_SLOT_ID, CONFIG_FEEDBACKSENSOR_TIMEOUT_MS);
 
@@ -150,6 +148,19 @@ public class Drivetrain extends SubsystemBase
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+
+    // Converts joystick input adjusted for deadband to current for the motor
+    public void dumbDrive(double leftPos, double rightPos) 
+    {
+        double retval = 0.0;
+        
+        retval = clampInput(leftPos, m_deadband);
+        leftTalonLead.set(TalonFXControlMode.PercentOutput,retval * VELOCITY_LIMIT_PERCENTAGE);    
+
+        retval = clampInput(rightPos, m_deadband);
+        rightTalonLead.set(TalonFXControlMode.PercentOutput,retval * VELOCITY_LIMIT_PERCENTAGE);    
+    }
+
 
     // Converts joystick input adjusted to a RPM for the Falcon's PIDF loop to aim for
     public void velocityDrive(double leftPos, double rightPos, boolean useSlowModifier, boolean useReverse)
