@@ -78,6 +78,7 @@ public class VelocityDrive extends CommandBase
     @Override
     public void end(boolean interrupted) 
     {
+        m_drivetrain.stop();
     }
 
     // Returns true when the command should end.
