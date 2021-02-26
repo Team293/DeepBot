@@ -101,8 +101,8 @@ public class ArcadeDrive extends CommandBase
         }
 
         //Clamp input to verify they are valid and greater than the deadband
-        turning = m_drivetrain.clampInput(turning, m_deadband);
-        speed = m_drivetrain.clampInput(speed, m_deadband);
+        turning = m_drivetrain.calcMotorPower(turning, m_deadband);
+        speed = m_drivetrain.calcMotorPower(speed, m_deadband);
 
         //Pass input to arcadeDrive
         m_drivetrain.arcadeDrive(speed, turning);  

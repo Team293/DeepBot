@@ -71,7 +71,7 @@ public class VelocityDrive extends CommandBase
         }
 
         //Send throttle data to velocity drive
-        m_drivetrain.velocityDrive(m_operatorLeftJoy.getY(), m_operatorRightJoy.getY(),useSlowModifier,useReverse);
+        m_drivetrain.velocityDrive(-m_operatorLeftJoy.getY(), m_operatorRightJoy.getY(),useSlowModifier,useReverse);
     }
 
     // Called once the command ends or is interrupted.
