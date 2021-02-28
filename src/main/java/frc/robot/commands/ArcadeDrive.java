@@ -94,13 +94,13 @@ public class ArcadeDrive extends CommandBase
             else
             {
                 //Going in reverse! Right trigger was zero, set speed to left trigger
-                speed = triggerLeft;
+                speed = -triggerLeft;
             }
         }
         else
         {
-            //Use the stick
-            speed = m_xboxcontroller.getY(Hand.kLeft);
+            //Use the stick, note that the joystick is inverted, -1 is up, 1 is down
+            speed = m_xboxcontroller.getY(Hand.kLeft) * -1;
             SmartDashboard.putNumber("AD: Speed", speed);
         }
 
