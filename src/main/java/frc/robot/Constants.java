@@ -22,31 +22,29 @@ package frc.robot;
  */
 public class Constants 
 {
-   /**
-    * public static final class DriveConstants {
-    *   public static final int kLeftMotor1Port = 0;
-    *   public static final int kLeftMotor2Port = 1;
-    *   public static final int kRightMotor1Port = 2;
-    *   public static final int kRightMotor2Port = 3; 
-    * }
-    */ 
     public static final class DrivetrainConstants
     {
         public static final int LEFT_LEAD_TALON_CAN_ID = 0;
         public static final int LEFT_FOLLOWER_TALON_CAN_ID = 1;
         public static final int RIGHT_LEAD_TALON_CAN_ID = 2;
         public static final int RIGHT_FOLLOWER_TALON_CAN_ID = 3;
-        public static final double KF = 0.04759;
-        public static final double KP = 0.01461;
-        public static final double KI = 0.0;
+        public static final double KF = 0;
+        public static final double KP = 9e-5;
+        public static final double KI = 6e-7;
         public static final double KD = 0.0;
         public static final int PID_SLOT_ID = 0;
         public static final int PID_CONFIG_TIMEOUT_MS = 10;
         public static final int CONFIG_FEEDBACKSENSOR_TIMEOUT_MS = 4000;
         public static final double CLOSED_LOOP_RAMP = 0.5;
-        public static final double MAX_VELOCITY = 21549;
+        public static final double MAX_VELOCITY = 3000;
         public static final double VELOCITY_LIMIT_PERCENTAGE = 0.5;
         public static final double VELOCITY_SLOWDOWN_MODIFIER = 0.5;
+        public static final double MIN_VELOCITY = 0;
+        public static final double MAX_ACCEL = 2000;
+        public static final int SMART_MOTION_SLOT = 0;
+        public static final double MIN_OUTPUT = -1;
+        public static final double ENCODER_CONVERSION_FACTOR = 0.25;
+        public static final double MAX_OUTPUT = 1;
     }
 
     public static final class InputConstants 

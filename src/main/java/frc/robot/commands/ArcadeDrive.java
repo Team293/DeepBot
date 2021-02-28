@@ -75,6 +75,7 @@ public class ArcadeDrive extends CommandBase
 
         //Checks if joystick value is higher or lower than deadband value
         turning = m_xboxcontroller.getX(Hand.kLeft);
+        SmartDashboard.putNumber("AD: Turning", turning);
 
         //Check if we should use the triggers for speed
         if(m_forzaEnabled)
@@ -82,6 +83,8 @@ public class ArcadeDrive extends CommandBase
             //Get trigger values
             triggerRight = m_xboxcontroller.getTriggerAxis(Hand.kRight);
             triggerLeft = m_xboxcontroller.getTriggerAxis(Hand.kLeft);
+            SmartDashboard.putNumber("AD: Right Trigger", triggerRight);
+            SmartDashboard.putNumber("AD: Left Trigger", triggerLeft);
 
             if(triggerRight >= triggerLeft)
             {
@@ -98,11 +101,12 @@ public class ArcadeDrive extends CommandBase
         {
             //Use the stick
             speed = m_xboxcontroller.getY(Hand.kLeft);
+            SmartDashboard.putNumber("AD: Speed", speed);
         }
 
         //Clamp input to verify they are valid and greater than the deadband
-        turning = m_drivetrain.calcMotorPower(turning, m_deadband);
-        speed = m_drivetrain.calcMotorPower(speed, m_deadband);
+        turning = m_drivetrain.clampInput(turning, m_deadband);
+        speed = m_drivetrain.clampInput(speed, m_deadband);
 
         //Pass input to arcadeDrive
         m_drivetrain.arcadeDrive(speed, turning);  

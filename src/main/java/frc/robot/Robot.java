@@ -27,9 +27,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot
 {
-
     private Command m_autonomousCommand;
-
     private RobotContainer m_robotContainer;
 
     /**
@@ -134,5 +132,4 @@ public class Robot extends TimedRobot
     public void testPeriodic()
     {
     }
-
 }
