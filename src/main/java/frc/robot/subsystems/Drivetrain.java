@@ -117,6 +117,10 @@ public class Drivetrain extends SubsystemBase
 
         SmartDashboard.putNumber("NavX Heading", m_navX.getAngle());
         SmartDashboard.putNumber("NavX Heading", m_navX.getFusedHeading());
+        SmartDashboard.putNumber("NavX Turn Rate", m_navX.getRate());
+        SmartDashboard.putNumber("NavX X Displacement", m_navX.getDisplacementX());
+        SmartDashboard.putNumber("NavX Y Displacement", m_navX.getDisplacementY());
+
 
         m_deadband = SmartDashboard.getNumber("Deadband", DEFAULT_DEADBAND);
         m_velocityLimitPercentage = SmartDashboard.getNumber("Max Velocity Percentage", DEFAULT_MAX_VELOCITY_PERCENTAGE);
