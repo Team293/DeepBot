@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
+
 import static frc.robot.Constants.DrivetrainConstants.*;
 import static frc.robot.Constants.InputConstants.*;
 
@@ -51,7 +53,6 @@ public class Drivetrain extends SubsystemBase
     private double m_velocityLimitPercentage = DEFAULT_MAX_VELOCITY_PERCENTAGE;
     private double m_turningLimitPercentage = DEFAULT_MAX_TURNING_SPEED;
     private double m_deadband = DEFAULT_DEADBAND;
-    private DifferentialDrive m_differentialDrive;
 
     AHRS m_navX;
     /**
@@ -97,7 +98,6 @@ public class Drivetrain extends SubsystemBase
         rightPID.setD(KD);
         rightPID.setFF(KF);
 
-        m_differentialDrive = new DifferentialDrive(m_leftMotorLead, m_rightMotorLead);
         m_navX = new AHRS(Port.kMXP);
 
         //Setup SmartDashboard
@@ -222,9 +222,36 @@ public class Drivetrain extends SubsystemBase
         rightPID.setReference((right * MAX_VELOCITY), ControlType.kVelocity);
     }
 
-    public void arcadeDrive(double forwardMovement, double turning)
+    //Very much copied from the ArcadeDrive method of the DifferentialDrive class
+    public void arcadeDrive(double velocity, double turning)
     {
-        m_differentialDrive.arcadeDrive(forwardMovement * m_velocityLimitPercentage, turning * m_turningLimitPercentage);
+        velocity = clampInput(velocity * m_velocityLimitPercentage,m_deadband);
+        turning = clampInput(turning * m_turningLimitPercentage,m_deadband);
+        double leftMotorOutput;
+        double rightMotorOutput;
+    
+        double maxInput = Math.copySign(Math.max(Math.abs(velocity), Math.abs(turning)), velocity);
+        if (velocity >= 0.0) {
+            // First quadrant, else second quadrant
+            if (turning >= 0.0) {
+              leftMotorOutput = maxInput;
+              rightMotorOutput = velocity - turning;
+            } else {
+              leftMotorOutput = velocity + turning;
+              rightMotorOutput = maxInput;
+            }
+          } else {
+            // Third quadrant, else fourth quadrant
+            if (turning >= 0.0) {
+              leftMotorOutput = velocity + turning;
+              rightMotorOutput = maxInput;
+            } else {
+              leftMotorOutput = maxInput;
+              rightMotorOutput = velocity - turning;
+            }
+          }
+        m_leftMotorLead.set(MathUtil.clamp(leftMotorOutput, -1.0, 1.0));
+        m_rightMotorLead.set(MathUtil.clamp(rightMotorOutput, -1.0, 1.0) * -1);
     }
     
     public double clampInput(double input, double deadband) 
