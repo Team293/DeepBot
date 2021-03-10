@@ -255,6 +255,37 @@ public class Drivetrain extends SubsystemBase
         
     }
 
+    public void velArcadeDrive(double velocity, double turning)
+    {
+        velocity = clampInput(velocity * m_velocityLimitPercentage,m_deadband);
+        turning = clampInput(turning * m_turningLimitPercentage,m_deadband);
+        double leftMotorOutput;
+        double rightMotorOutput;
+    
+        double maxInput = Math.copySign(Math.max(Math.abs(velocity), Math.abs(turning)), velocity);
+        if (velocity >= 0.0) {
+            // First quadrant, else second quadrant
+            if (turning >= 0.0) {
+              leftMotorOutput = maxInput;
+              rightMotorOutput = velocity - turning;
+            } else {
+              leftMotorOutput = velocity + turning;
+              rightMotorOutput = maxInput;
+            }
+          } else {
+            // Third quadrant, else fourth quadrant
+            if (turning >= 0.0) {
+              leftMotorOutput = velocity + turning;
+              rightMotorOutput = maxInput;
+            } else {
+              leftMotorOutput = maxInput;
+              rightMotorOutput = velocity - turning;
+            }
+          }
+        leftPID.setReference(leftMotorOutput * MAX_VELOCITY, ControlType.kVelocity);
+        rightPID.setReference(rightMotorOutput * MAX_VELOCITY, ControlType.kVelocity);
+    }
+
     public double clampInput(double input, double deadband) 
     {
         double retval = 0.0;
