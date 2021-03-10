@@ -36,7 +36,7 @@ public class Constants
         public static final int PID_CONFIG_TIMEOUT_MS = 10;
         public static final int CONFIG_FEEDBACKSENSOR_TIMEOUT_MS = 4000;
         public static final double CLOSED_LOOP_RAMP = 0.5;
-        public static final double MAX_VELOCITY = 3000;
+        public static final double MAX_VELOCITY = 3000; //TODO Check
         public static final double DEFAULT_MAX_VELOCITY_PERCENTAGE = 1.0;
         public static final double DEFAULT_MAX_TURNING_SPEED = 0.85;
         public static final double VELOCITY_SLOWDOWN_MODIFIER = 0.5;

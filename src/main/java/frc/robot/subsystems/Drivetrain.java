@@ -250,10 +250,11 @@ public class Drivetrain extends SubsystemBase
               rightMotorOutput = velocity - turning;
             }
           }
-        m_leftMotorLead.set(MathUtil.clamp(leftMotorOutput, -1.0, 1.0));
-        m_rightMotorLead.set(MathUtil.clamp(rightMotorOutput, -1.0, 1.0) * -1);
+        m_leftMotorLead.set(clampInput(leftMotorOutput));
+        m_rightMotorLead.set(clampInput(rightMotorOutput) * -1);
+        
     }
-    
+
     public double clampInput(double input, double deadband) 
     {
         double retval = 0.0;
@@ -275,4 +276,10 @@ public class Drivetrain extends SubsystemBase
 
         return retval;
     }
+    
+    public double clampInput(double input) 
+    {
+        return clampInput(input, 0.0);
+    }
+
 }
