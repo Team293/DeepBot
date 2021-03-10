@@ -38,7 +38,7 @@ public class Constants
         public static final double CLOSED_LOOP_RAMP = 0.5;
         public static final double MAX_VELOCITY = 3000;
         public static final double DEFAULT_MAX_VELOCITY_PERCENTAGE = 1.0;
-        public static final double DEFAULT_MAX_TURNING_SPEED = 0.75;
+        public static final double DEFAULT_MAX_TURNING_SPEED = 0.85;
         public static final double VELOCITY_SLOWDOWN_MODIFIER = 0.5;
         public static final double MIN_VELOCITY = 0;
         public static final double MAX_ACCEL = 2000;
@@ -50,7 +50,7 @@ public class Constants
 
     public static final class InputConstants 
     {
-        public static final double DEFAULT_DEADBAND = 0.15;
-        public static final boolean DEFAULT_FORZA_MODE = false;
+        public static final double DEFAULT_DEADBAND = 0.0;
+        public static final boolean DEFAULT_FORZA_MODE = true;
     }
 }
