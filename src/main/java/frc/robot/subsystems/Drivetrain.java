@@ -52,7 +52,7 @@ public class Drivetrain extends SubsystemBase
     
     private double m_velocityLimitPercentage = DEFAULT_MAX_VELOCITY_PERCENTAGE;
     private double m_turningLimitPercentage = DEFAULT_MAX_TURNING_SPEED;
-    private double m_deadband = DEFAULT_DEADBAND;
+    private double m_driveJoyDeadband = DRIVE_JOYSTICK_DEADBAND;
 
     AHRS m_navX;
     /**
@@ -103,7 +103,7 @@ public class Drivetrain extends SubsystemBase
         m_navX = new AHRS(Port.kMXP);
 
         //Setup SmartDashboard
-        SmartDashboard.putNumber("Deadband", m_deadband);
+        SmartDashboard.putNumber("Drive Joystick Deadband", m_driveJoyDeadband);
         SmartDashboard.putNumber("Max Velocity Percentage", m_velocityLimitPercentage);
         SmartDashboard.putNumber("Max Turning Percentage", m_turningLimitPercentage);
     }
@@ -122,35 +122,20 @@ public class Drivetrain extends SubsystemBase
         SmartDashboard.putNumber("NavX Turn Rate", m_navX.getRate());
         SmartDashboard.putNumber("NavX X Displacement", m_navX.getDisplacementX());
         SmartDashboard.putNumber("NavX Y Displacement", m_navX.getDisplacementY());
-
-
-        m_deadband = SmartDashboard.getNumber("Deadband", DEFAULT_DEADBAND);
-        m_velocityLimitPercentage = SmartDashboard.getNumber("Max Velocity Percentage", DEFAULT_MAX_VELOCITY_PERCENTAGE);
-        if(m_velocityLimitPercentage > 1)
-        {
-            m_velocityLimitPercentage = 1;
-            SmartDashboard.putNumber("Max Velocity Percentage", m_velocityLimitPercentage);
-        }
-        else if(m_velocityLimitPercentage < 0)
-        {
-            m_velocityLimitPercentage = 0;
-            SmartDashboard.putNumber("Max Velocity Percentage", m_velocityLimitPercentage);
-        }
-
-        m_turningLimitPercentage = SmartDashboard.getNumber("Max Turning Percentage", DEFAULT_MAX_TURNING_SPEED);
-        if(m_turningLimitPercentage > 1)
-        {
-            m_turningLimitPercentage = 1;
-            SmartDashboard.putNumber("Max Turning Percentage", m_turningLimitPercentage);
-        }
-        else if(m_turningLimitPercentage < 0)
-        {
-            m_turningLimitPercentage = 0;
-            SmartDashboard.putNumber("Max Turning Percentage", m_turningLimitPercentage);
-        }
-
         SmartDashboard.putNumber("Left Motor Velocity", leftEncoder.getVelocity());
         SmartDashboard.putNumber("Right Motor Velocity", rightEncoder.getVelocity());
+
+
+        m_driveJoyDeadband = MathUtil.clamp(SmartDashboard.getNumber("Drive Joystick Deadband", DRIVE_JOYSTICK_DEADBAND),0,1);
+        SmartDashboard.putNumber("Drive Joystick Deadband", m_driveJoyDeadband);
+
+        m_velocityLimitPercentage = MathUtil.clamp(SmartDashboard.getNumber("Max Velocity Percentage", DEFAULT_MAX_VELOCITY_PERCENTAGE),0,1);
+        SmartDashboard.putNumber("Max Velocity Percentage", m_velocityLimitPercentage);
+
+        m_turningLimitPercentage = MathUtil.clamp(SmartDashboard.getNumber("Max Velocity Percentage", DEFAULT_MAX_TURNING_SPEED),0,1);
+        SmartDashboard.putNumber("Max Velocity Percentage", m_turningLimitPercentage);
+
+
 
     } 
 
@@ -165,10 +150,10 @@ public class Drivetrain extends SubsystemBase
     {
         double retval = 0.0;
         
-        retval = clampInput(leftPos, m_deadband);
+        retval = clampInput(leftPos, m_driveJoyDeadband);
         m_leftMotorLead.set(retval * m_velocityLimitPercentage);    
 
-        retval = clampInput(rightPos, m_deadband);
+        retval = clampInput(rightPos, m_driveJoyDeadband); // TODO fix naming conventions
         m_rightMotorLead.set(retval * m_velocityLimitPercentage);    
     }
 
@@ -183,8 +168,8 @@ public class Drivetrain extends SubsystemBase
             leftPos = -rightPos;
             rightPos = -tempValue;
         }
-
-        retval = clampInput(leftPos, m_deadband);
+        
+        retval = clampInput(leftPos, m_driveJoyDeadband);
         if(useSlowModifier)
         {
             //example set velocity
@@ -195,7 +180,7 @@ public class Drivetrain extends SubsystemBase
             leftPID.setReference(retval * MAX_VELOCITY * m_velocityLimitPercentage, ControlType.kVelocity);
         }
 
-        retval = clampInput(rightPos, m_deadband);
+        retval = clampInput(rightPos, m_driveJoyDeadband);
         if(useSlowModifier)
         {
             rightPID.setReference(retval * MAX_VELOCITY * m_velocityLimitPercentage * VELOCITY_SLOWDOWN_MODIFIER, ControlType.kVelocity);
@@ -231,8 +216,8 @@ public class Drivetrain extends SubsystemBase
     //Very much copied from the ArcadeDrive method of the DifferentialDrive class
     public void arcadeDrive(double velocity, double turning)
     {
-        velocity = clampInput(velocity * m_velocityLimitPercentage,m_deadband);
-        turning = clampInput(turning * m_turningLimitPercentage,m_deadband);
+        velocity = velocity * m_velocityLimitPercentage;
+        turning = turning * m_turningLimitPercentage;
         double leftMotorOutput;
         double rightMotorOutput;
     
@@ -263,8 +248,8 @@ public class Drivetrain extends SubsystemBase
 
     public void velArcadeDrive(double velocity, double turning)
     {
-        velocity = clampInput(velocity * m_velocityLimitPercentage,m_deadband);
-        turning = clampInput(turning * m_turningLimitPercentage,m_deadband);
+        velocity = velocity * m_velocityLimitPercentage;
+        turning = turning * m_turningLimitPercentage;
         double leftMotorOutput;
         double rightMotorOutput;
     

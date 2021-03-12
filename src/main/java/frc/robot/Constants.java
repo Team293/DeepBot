@@ -50,7 +50,9 @@ public class Constants
 
     public static final class InputConstants 
     {
-        public static final double DEFAULT_DEADBAND = 0.0;
+        public static final double DRIVE_JOYSTICK_DEADBAND = 0.0;
+        public static final double ARCADE_JOY_DEADBAND = 0.0;
+        public static final double FORZA_DEADBAND = 0.0;
         public static final boolean DEFAULT_FORZA_MODE = true;
     }
 }
