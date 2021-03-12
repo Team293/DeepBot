@@ -109,7 +109,7 @@ public class ArcadeDrive extends CommandBase
         speed = m_drivetrain.clampInput(speed, m_deadband);
 
         //Pass input to arcadeDrive
-        m_drivetrain.arcadeDrive(speed, turning);  
+        m_drivetrain.velArcadeDrive(speed, turning);  
     }
 
     // Called once the command ends or is interrupted.

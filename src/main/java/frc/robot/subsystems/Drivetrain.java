@@ -68,6 +68,7 @@ public class Drivetrain extends SubsystemBase
         m_leftMotorFollow.setIdleMode(IdleMode.kCoast);
         leftEncoder = m_leftMotorLead.getEncoder();
         leftEncoder.setPositionConversionFactor(ENCODER_CONVERSION_FACTOR);
+        leftEncoder.setVelocityConversionFactor(ENCODER_CONVERSION_FACTOR);
         leftPID = m_leftMotorLead.getPIDController();
         leftPID.setOutputRange(MIN_OUTPUT, MAX_OUTPUT);
         leftPID.setSmartMotionMaxVelocity(MAX_VELOCITY, SMART_MOTION_SLOT);
@@ -81,7 +82,8 @@ public class Drivetrain extends SubsystemBase
         m_rightMotorLead.setIdleMode(IdleMode.kCoast);
         m_rightMotorFollow.setIdleMode(IdleMode.kCoast);
         rightEncoder = m_rightMotorLead.getEncoder();
-        rightEncoder.setPositionConversionFactor(0.25);
+        rightEncoder.setPositionConversionFactor(ENCODER_CONVERSION_FACTOR);
+        rightEncoder.setVelocityConversionFactor(ENCODER_CONVERSION_FACTOR);
         rightPID = m_rightMotorLead.getPIDController();
         rightPID.setOutputRange(MIN_OUTPUT, MAX_OUTPUT);
         rightPID.setSmartMotionMaxVelocity(MAX_VELOCITY, SMART_MOTION_SLOT);
@@ -146,6 +148,10 @@ public class Drivetrain extends SubsystemBase
             m_turningLimitPercentage = 0;
             SmartDashboard.putNumber("Max Turning Percentage", m_turningLimitPercentage);
         }
+
+        SmartDashboard.putNumber("Left Motor Velocity", leftEncoder.getVelocity());
+        SmartDashboard.putNumber("Right Motor Velocity", rightEncoder.getVelocity());
+
     } 
 
     @Override
@@ -283,7 +289,8 @@ public class Drivetrain extends SubsystemBase
             }
           }
         leftPID.setReference(leftMotorOutput * MAX_VELOCITY, ControlType.kVelocity);
-        rightPID.setReference(rightMotorOutput * MAX_VELOCITY, ControlType.kVelocity);
+        rightPID.setReference(rightMotorOutput * MAX_VELOCITY * -1, ControlType.kVelocity);
+
     }
 
     public double clampInput(double input, double deadband) 
