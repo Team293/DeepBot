@@ -73,7 +73,7 @@ public class Constants
 
     public static final class AutonomousCommandConstants
     {
-        public static final double TARGET_WITHIN_RANGE_FEET = DrivetrainConstants.TRACK_WIDTH_FEET/4.0d; //Half track width
+        public static final double TARGET_WITHIN_RANGE_FEET = DrivetrainConstants.TRACK_WIDTH_FEET/4.0d; //Quarter track width
         public static final double STARTING_X = 0.0d;
         public static final double STARTING_Y = 0.0d;
         public static final double STARTING_HEADING = Math.toRadians(0.0d);
