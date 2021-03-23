@@ -24,33 +24,66 @@ public class Constants
 {
     public static final class DrivetrainConstants
     {
+        //Arcade Drive
+        public static final double DEFAULT_JOYSTICK_DEADBAND = 0.15;
+        public static final double DEFAULT_FORZA_DEADBAND = 0.01;
+        public static final double DEFAULT_ARCADE_JOY_DEADBAND = 0.01;
+        public static final boolean DEFAULT_FORZA_MODE = true;
+        
         public static final int LEFT_LEAD_TALON_CAN_ID = 0;
         public static final int LEFT_FOLLOWER_TALON_CAN_ID = 1;
         public static final int RIGHT_LEAD_TALON_CAN_ID = 2;
         public static final int RIGHT_FOLLOWER_TALON_CAN_ID = 3;
         public static final double KF = 0;
         public static final double KP = 9e-5;
-        public static final double KI = 6e-7;
+        public static final double KI = 0.0;
         public static final double KD = 0.0;
         public static final int PID_SLOT_ID = 0;
         public static final int PID_CONFIG_TIMEOUT_MS = 10;
         public static final int CONFIG_FEEDBACKSENSOR_TIMEOUT_MS = 4000;
         public static final double CLOSED_LOOP_RAMP = 0.5;
-        public static final double MAX_VELOCITY = 3000;
-        public static final double DEFAULT_MAX_VELOCITY_PERCENTAGE = 0.25;
-        public static final double DEFAULT_MAX_TURNING_SPEED = 0.25;
+        public static final double MAX_VELOCITY = 5900; 
+        public static final double DEFAULT_MAX_VELOCITY_PERCENTAGE = 1.0;
+        public static final double DEFAULT_MAX_TURNING_SPEED = 0.85;
         public static final double VELOCITY_SLOWDOWN_MODIFIER = 0.5;
         public static final double MIN_VELOCITY = 0;
         public static final double MAX_ACCEL = 2000;
         public static final int SMART_MOTION_SLOT = 0;
         public static final double MIN_OUTPUT = -1;
-        public static final double ENCODER_CONVERSION_FACTOR = 0.25;
+        public static final double ENCODER_CONVERSION_FACTOR = 1.0;
         public static final double MAX_OUTPUT = 1;
+
+        //MISC
+        public static final double WHEEL_CIRCUMFERENCE_FEET = (4.0d/12.0d)*Math.PI; // Wheel diameter 3 in, converting to feet
+        public static final double SECONDS_TO_MINUTES = 1.0d/60.0d;
+        public static final double MINUTES_TO_SECONDS = 60.0d/1.0d;
+        public static final double GEARBOX_RATIO_TO_ONE = 6.67d;
+        public static final int ENCODER_COUNTS_PER_REVOLUTION = 4096;
+        public static final int ENCODER_EDGES_PER_STEP =  1; 
+        public static final int ENCODER_UNITS_PER_REVOLUTION = ENCODER_COUNTS_PER_REVOLUTION; // Edges per Rotation
+        public static final double TRACK_WIDTH_FEET = 24.831d/12.0d; //Track width is 24.831 inches
+        public static final boolean USE_NAVX_HEADING = true; 
+    }
+
+    public static final class SmoothControlConstants
+    {
+        public static final double K1 = 1.0d;
+        public static final double K2 = 3.0d;
+    }
+
+    public static final class AutonomousCommandConstants
+    {
+        public static final double TARGET_WITHIN_RANGE_FEET = DrivetrainConstants.TRACK_WIDTH_FEET/4.0d; //Quarter track width
+        public static final double STARTING_X = 0.0d;
+        public static final double STARTING_Y = 0.0d;
+        public static final double STARTING_HEADING = Math.toRadians(0.0d);
     }
 
     public static final class InputConstants 
     {
-        public static final double DEFAULT_DEADBAND = 0.15;
-        public static final boolean DEFAULT_FORZA_MODE = false;
+        public static final double DRIVE_JOYSTICK_DEADBAND = 0.0;
+        public static final double ARCADE_JOY_DEADBAND = 0.0;
+        public static final double FORZA_DEADBAND = 0.0;
+        public static final boolean DEFAULT_FORZA_MODE = true;
     }
 }
